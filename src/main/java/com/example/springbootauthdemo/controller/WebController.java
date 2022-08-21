@@ -1,2 +1,9 @@
-package com.example.springbootauthdemo.controller;public class WebController {
+package com.example.springbootauthdemo.controller;
+
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class WebController {
+
+
 }

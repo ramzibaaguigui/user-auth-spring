@@ -1,2 +1,10 @@
-package com.example.springbootauthdemo.payload;public class LoginRequestPayload {
+package com.example.springbootauthdemo.payload;
+
+import lombok.Getter;
+
+@Getter
+public class LoginRequestPayload {
+    private String username;
+    private String password;
+
 }

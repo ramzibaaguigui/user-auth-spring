@@ -1,11 +1,14 @@
-package com.example.springbootauthdemo.auth;
+package com.example.springbootauthdemo.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -15,7 +18,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "auths")
-public class UserAuth {
+public class UserAuth implements Authentication {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,4 +38,38 @@ public class UserAuth {
     @Column(name = "issued_at")
     private Date issuedAt;
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public Object getCredentials() {
+        return null;
+    }
+
+    @Override
+    public Object getDetails() {
+        return null;
+    }
+
+    @Override
+    public Object getPrincipal() {
+        return this.user;
+    }
+
+    @Override
+    public boolean isAuthenticated() {
+        return false;
+    }
+
+    @Override
+    public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+
+    }
+
+    @Override
+    public String getName() {
+        return this.token;
+    }
 }

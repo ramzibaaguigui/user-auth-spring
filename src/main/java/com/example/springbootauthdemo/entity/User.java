@@ -1,12 +1,13 @@
-package com.example.springbootauthdemo.auth;
+package com.example.springbootauthdemo.entity;
 
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.security.Principal;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,10 +16,11 @@ import javax.persistence.*;
 
 @Table(name = "users")
 @Entity
-public class User {
+public class User implements Principal {
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
     @Column(name = "first_name")
@@ -33,4 +35,8 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Override
+    public String getName() {
+        return this.username;
+    }
 }
