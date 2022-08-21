@@ -31,11 +31,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.addFilterBefore(userAuthFilter, BasicAuthenticationFilter.class);
+        http.authorizeRequests().antMatchers("/register", "/auth", "/forAll").permitAll()
+                .and().authorizeRequests().antMatchers("/logout", "/authRequired").authenticated()
+                .and().cors().and().csrf().disable();
+
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
         super.configure(web);
+
     }
 
 }
