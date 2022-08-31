@@ -38,18 +38,25 @@ public class UserAuthFilter extends OncePerRequestFilter {
 
         String authToken = extractAuthTokenHeader(request);
         if (authToken == null) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
 
         UserAuth auth = userAuthService.validateAuthentication(authToken);
         if (auth == null) {
+            System.out.println("setting to unauthrized");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
 
         if (authExpired(auth)) {
+            System.out.println("expired, setting to unauthorized");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
-
+        System.out.println("arrived at this stage");
+        System.out.println(auth.getToken());
+        auth.setAuthenticated(true);
         SecurityContextHolder.getContext().setAuthentication(auth);
         filterChain.doFilter(request, response);
 
@@ -57,7 +64,7 @@ public class UserAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        return requestsRegistration(request) || requestsAuthentication(request);
+        return requestsRegistration(request) || requestsAuthentication(request) || requestsForAll(request);
     }
 
     private boolean requestsRegistration(HttpServletRequest request) {
@@ -70,6 +77,10 @@ public class UserAuthFilter extends OncePerRequestFilter {
 
     private String extractAuthTokenHeader(HttpServletRequest request) {
         return request.getHeader(AuthHeaders.HEADER_AUTHENTICATION);
+    }
+
+    private boolean requestsForAll(HttpServletRequest request) {
+        return request.getServletPath().equals("/forAll");
     }
 
     private boolean authExpired(@NonNull UserAuth userAuth) {

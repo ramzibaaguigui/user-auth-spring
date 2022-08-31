@@ -1,5 +1,6 @@
 package com.example.springbootauthdemo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,10 +34,21 @@ public class User implements Principal {
     private String username;
 
     @Column(name = "password")
+    @JsonIgnore
     private String password;
 
     @Override
     public String getName() {
         return this.username;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", username='" + username + '\'' +
+                '}';
     }
 }

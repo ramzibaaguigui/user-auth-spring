@@ -1,6 +1,5 @@
 package com.example.springbootauthdemo.service;
 
-import ch.qos.logback.core.util.TimeUtil;
 import com.example.springbootauthdemo.entity.User;
 import com.example.springbootauthdemo.entity.UserAuth;
 import com.example.springbootauthdemo.exception.AuthenticationTokenNotFoundException;

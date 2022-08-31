@@ -1,7 +1,6 @@
 package com.example.springbootauthdemo.service;
 
 import com.example.springbootauthdemo.entity.UserAuth;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;

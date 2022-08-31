@@ -1,5 +1,6 @@
 package com.example.springbootauthdemo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,8 @@ import java.util.Date;
 @Table(name = "auths")
 public class UserAuth implements Authentication {
 
+    private boolean isAuthenticated;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "auth_id")
@@ -39,33 +42,38 @@ public class UserAuth implements Authentication {
     private Date issuedAt;
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
 
     @Override
+    @JsonIgnore
     public Object getCredentials() {
-        return null;
+        return this.token;
     }
 
     @Override
+    @JsonIgnore
     public Object getDetails() {
         return null;
     }
 
     @Override
+    @JsonIgnore
     public Object getPrincipal() {
         return this.user;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAuthenticated() {
-        return false;
+        return this.isAuthenticated;
     }
 
     @Override
     public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
-
+        this.isAuthenticated = isAuthenticated;
     }
 
     @Override

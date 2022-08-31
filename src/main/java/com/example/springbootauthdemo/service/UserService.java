@@ -1,6 +1,5 @@
 package com.example.springbootauthdemo.service;
 
-import ch.qos.logback.core.util.TimeUtil;
 import com.example.springbootauthdemo.entity.User;
 import com.example.springbootauthdemo.entity.UserAuth;
 import com.example.springbootauthdemo.exception.*;
@@ -12,13 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.stream.Collectors;
-
 import static com.example.springbootauthdemo.utils.Constants.PASSWORD_MIN_LENGTH;
 
 @Service
 public class UserService {
-
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
