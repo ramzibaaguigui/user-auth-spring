@@ -31,28 +31,7 @@ public class UserAuthService {
         this.time = time;
     }
 
-    public UserAuth validateAuthentication(String authToken) {
-        if (authToken == null) {
-            return null;
-        }
-
-        UserAuth auth = userAuthPool.validateAuthentication(authToken);
-        if (auth == null) {
-            auth = userAuthRepository.findUserAuthByTokenEquals(authToken).orElse(null);
-            if (auth == null) {
-                return null;
-            }
-            userAuthPool.storeAuthentication(auth);
-        }
-
-        return auth;
-    }
-
-    public UserAuth storeAuthentication(UserAuth userAuth) {
-        return userAuthRepository.save(userAuth);
-    }
-
-    public UserAuth generateAuthForUser(User user) {
+    public UserAuth storeAuthForUser(User user) {
         UserAuth userAuth = new UserAuth();
         userAuth.setUser(user);
         userAuth.setToken(authTokenGenerator.generateToken());

@@ -6,6 +6,7 @@ import com.example.springbootauthdemo.exception.IncorrectUsernamePasswordExcepti
 import com.example.springbootauthdemo.exception.LoginRequestPayloadNotValidException;
 import com.example.springbootauthdemo.headers.AuthHeaders;
 import com.example.springbootauthdemo.payload.LoginRequestPayload;
+import com.example.springbootauthdemo.service.UserAuthPool;
 import com.example.springbootauthdemo.service.UserAuthService;
 import com.example.springbootauthdemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +24,15 @@ public class AuthController {
 
     private final UserService userService;
     private final UserAuthService userAuthService;
+    private final UserAuthPool userAuthPool;
 
     @Autowired
     public AuthController(UserAuthService userAuthService,
-                          UserService userService) {
+                          UserService userService,
+                          UserAuthPool userAuthPool) {
         this.userService = userService;
         this.userAuthService = userAuthService;
+        this.userAuthPool = userAuthPool;
     }
 
     @PostMapping("/register")
@@ -58,7 +62,9 @@ public class AuthController {
         }
 
         try {
+
             userAuthService.removeAuthentication(authToken);
+            userAuthPool.removeAuthentication(authToken);
             return ResponseEntity.ok().build();
         } catch (AuthenticationTokenNotFoundException e) {
             e.printStackTrace();

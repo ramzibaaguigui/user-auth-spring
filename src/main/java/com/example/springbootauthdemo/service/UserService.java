@@ -52,7 +52,7 @@ public class UserService {
         if (searchedUser == null) {
             throw new IncorrectUsernamePasswordException("could not find user with such credentials");
         }
-        return userAuthService.generateAuthForUser(searchedUser);
+        return userAuthService.storeAuthForUser(searchedUser);
     }
 
     private boolean validateLoginRequestPayload(LoginRequestPayload payload) {
