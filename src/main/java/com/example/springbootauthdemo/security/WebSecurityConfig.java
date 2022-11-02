@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.addFilterBefore(new UserAuthFilter(authenticationManager(), time), BasicAuthenticationFilter.class);
-        http.authorizeRequests().antMatchers("/forAll", "/auth")
+        http.authorizeRequests().antMatchers("/forAll", "/auth", "/register")
                 .permitAll().and()
                 .authorizeRequests().anyRequest().authenticated()
                 .and().cors().and().csrf().disable();
