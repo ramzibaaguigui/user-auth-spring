@@ -6,6 +6,7 @@ import com.example.springbootauthdemo.exception.AuthenticationTokenNotFoundExcep
 import com.example.springbootauthdemo.repository.UserAuthRepository;
 import com.example.springbootauthdemo.utils.AuthTokenGenerator;
 import com.example.springbootauthdemo.utils.TimeUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public class UserAuthService {
     private final AuthTokenGenerator authTokenGenerator;
     private final TimeUtils time;
 
-
+    @Autowired
     public UserAuthService(UserAuthPool userAuthPool,
                            UserAuthRepository userAuthRepository,
                            AuthTokenGenerator authTokenGenerator,

@@ -18,7 +18,7 @@ import java.util.Date;
 @Setter
 
 @Entity
-@Table(name = "auths")
+@Table(name = "authss")
 public class UserAuth implements Authentication {
 
     private boolean isAuthenticated;
