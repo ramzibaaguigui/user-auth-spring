@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -18,7 +20,7 @@ import java.util.Date;
 @Setter
 
 @Entity
-@Table(name = "authss")
+@Table(name = "auths")
 public class UserAuth implements Authentication {
 
     private boolean isAuthenticated;
@@ -44,7 +46,9 @@ public class UserAuth implements Authentication {
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return new ArrayList<>() {{
+            add(new SimpleGrantedAuthority("ROLE_USER"));
+        }};
     }
 
     @Override
@@ -80,4 +84,5 @@ public class UserAuth implements Authentication {
     public String getName() {
         return this.token;
     }
+
 }

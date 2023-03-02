@@ -54,15 +54,17 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/logout")
+    @PostMapping("/logouta")
     public ResponseEntity<?> logout(HttpServletRequest httpServletRequest) {
         String authToken = httpServletRequest.getHeader(AuthHeaders.HEADER_AUTHENTICATION);
+        System.out.println("=======================handling the response=========================");
+        System.out.println("the logout is requested");
         if (authToken == null) {
+            System.out.println("the auth is null");
             return ResponseEntity.badRequest().build();
         }
 
         try {
-
             userAuthService.removeAuthentication(authToken);
             userAuthPool.removeAuthentication(authToken);
             return ResponseEntity.ok().build();

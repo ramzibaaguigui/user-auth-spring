@@ -34,7 +34,7 @@ public class User implements Principal {
     private String username;
 
     @Column(name = "password")
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Override

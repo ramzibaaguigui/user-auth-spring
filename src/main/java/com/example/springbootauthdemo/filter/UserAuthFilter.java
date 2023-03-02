@@ -32,20 +32,27 @@ public class UserAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         String authToken = extractAuthTokenHeader(request);
+
         if (authToken == null) {
+            System.out.println("authToken == null");
             filterChain.doFilter(request, response);
             return;
         }
-
+        System.out.println("passed one");
         Authentication auth = authenticationManager.authenticate(TokenAuthentication.create(authToken));
 
         if (auth instanceof AnonymousAuthentication) {
+
             filterChain.doFilter(request, response);
+            System.out.println("auth instanceof AnonymousAuthentication");
             return;
         }
-
+        System.out.println("passed two");
         auth.setAuthenticated(!authExpired(((UserAuth) auth)));
+        System.out.println("the class name is: " + auth.getClass().getName());
+        System.out.println("the current auth is auth: " + auth.isAuthenticated());
         SecurityContextHolder.getContext().setAuthentication(auth);
+        System.out.println("authorities : " + auth.getAuthorities());
         filterChain.doFilter(request, response);
     }
 
