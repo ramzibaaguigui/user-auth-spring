@@ -8,8 +8,11 @@ import com.example.springbootauthdemo.auth.utils.AuthTokenGenerator;
 import com.example.springbootauthdemo.auth.utils.Constants;
 import com.example.springbootauthdemo.auth.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class LabService {
@@ -116,4 +119,11 @@ public class LabService {
         return laboratory;
     }
 
+    public List<Laboratory> getAllLabs() {
+        return labRepository.findAll();
+    }
+
+    public Laboratory getLabById(Long labId) {
+        return labRepository.getById(labId);
+    }
 }
