@@ -32,13 +32,16 @@ public class Laboratory {
     private String address;
 
     @Column(name = "created_at")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date createdAt;
 
+/*
     @Column(name = "latitude")
     private Double latitude;
 
     @Column(name = "longitude")
     private Double longitude;
+*/
 
     @Column(name = "email")
     private String email;

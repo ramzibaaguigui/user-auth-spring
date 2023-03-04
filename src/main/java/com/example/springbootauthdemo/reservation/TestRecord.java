@@ -27,4 +27,8 @@ public class TestRecord {
     @JoinColumn(name = "subtest_record_id")
     private List<SubTestRecord> subTestRecordList = new ArrayList<>();
 
+    @OneToOne
+    @JoinColumn(name = "interpretation_id")
+    private TestResultInterpretation interpretation;
+
 }

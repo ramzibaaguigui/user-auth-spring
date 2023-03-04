@@ -5,6 +5,7 @@ import com.example.springbootauthdemo.auth.entity.UserAuth;
 import com.example.springbootauthdemo.auth.security.auth.AnonymousAuthentication;
 import com.example.springbootauthdemo.auth.security.auth.TokenAuthentication;
 import com.example.springbootauthdemo.auth.utils.TimeUtils;
+import com.example.springbootauthdemo.lab.LabAuth;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -47,12 +48,18 @@ public class UserAuthFilter extends OncePerRequestFilter {
             System.out.println("auth instanceof AnonymousAuthentication");
             return;
         }
-        System.out.println("passed two");
-        auth.setAuthenticated(!authExpired(((UserAuth) auth)));
-        System.out.println("the class name is: " + auth.getClass().getName());
-        System.out.println("the current auth is auth: " + auth.isAuthenticated());
+        //
+
+        //
+        if (auth instanceof UserAuth) {
+            auth.setAuthenticated(!authExpired(((UserAuth) auth)));
+
+        }
+        if (auth instanceof LabAuth) {
+            auth.setAuthenticated(!labAuthExpired(((LabAuth) auth)));
+        }
+
         SecurityContextHolder.getContext().setAuthentication(auth);
-        System.out.println("authorities : " + auth.getAuthorities());
         filterChain.doFilter(request, response);
     }
 
@@ -68,5 +75,9 @@ public class UserAuthFilter extends OncePerRequestFilter {
 
     private boolean authExpired(@NonNull UserAuth userAuth) {
         return userAuth.getExpiresAt().before(time.now());
+    }
+
+    private boolean labAuthExpired(@NonNull LabAuth labAuth) {
+        return  labAuth.getExpiresAt().before(time.now());
     }
 }

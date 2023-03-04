@@ -35,6 +35,7 @@ public class LabService {
     public Laboratory registerLaboratory(Laboratory laboratory)
             throws PasswordNotMeetingRequirementsException, UsernameReservedException, UserInfoEmptyException {
         Laboratory toRegisterLab = validateLabRegistration(laboratory);
+        toRegisterLab.setCreatedAt(time.now());
         return labRepository.save(toRegisterLab);
     }
 

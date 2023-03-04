@@ -42,6 +42,7 @@ public class LabAuthController {
     }
     @PostMapping("/lab/auth")
     public ResponseEntity<?> authenticate(@RequestBody LabLoginRequest labLoginRequest) {
+        System.out.println("getting to this point");
         try {
             return ResponseEntity.ok(labService.authenticateLab(labLoginRequest));
         } catch (Exception | LoginRequestPayloadNotValidException | IncorrectUsernamePasswordException e) {

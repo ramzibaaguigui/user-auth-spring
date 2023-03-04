@@ -53,6 +53,7 @@ public class LabAuthFilter extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(auth);
         System.out.println("authorities : " + auth.getAuthorities());
         filterChain.doFilter(request, response);
+        System.out.println("passed the lab auth filter");
     }
 
     @Override

@@ -12,6 +12,7 @@ public class WebController {
 
     @GetMapping("/authRequired")
     public ResponseEntity<?> authRequired(Authentication auth) {
+        System.out.println("getting to this point auth required");
         return ResponseEntity.ok("hello, the authentication is required in order to access this content\n" +
                 "You are current logged as: " +
                 auth.getPrincipal());

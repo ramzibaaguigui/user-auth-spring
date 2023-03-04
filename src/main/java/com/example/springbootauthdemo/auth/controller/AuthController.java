@@ -11,10 +11,7 @@ import com.example.springbootauthdemo.auth.exception.LoginRequestPayloadNotValid
 import com.example.springbootauthdemo.auth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -54,7 +51,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/signout")
+    @DeleteMapping("/patient/signout")
     public ResponseEntity<?> logout(HttpServletRequest httpServletRequest) {
         String authToken = httpServletRequest.getHeader(AuthHeaders.HEADER_AUTHENTICATION);
         System.out.println("=======================handling the response=========================");

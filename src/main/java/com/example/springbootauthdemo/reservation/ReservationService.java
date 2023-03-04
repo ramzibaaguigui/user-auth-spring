@@ -2,6 +2,7 @@ package com.example.springbootauthdemo.reservation;
 
 import com.example.springbootauthdemo.auth.entity.User;
 import com.example.springbootauthdemo.lab.Laboratory;
+import com.example.springbootauthdemo.reservation.event.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -10,10 +11,11 @@ import org.springframework.stereotype.Service;
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
-
+    private final Publisher publisher;
     @Autowired
-    public ReservationService(ReservationRepository reservationRepository) {
+    public ReservationService(ReservationRepository reservationRepository, Publisher publisher) {
         this.reservationRepository = reservationRepository;
+        this.publisher = publisher;
     }
     public Reservation makeReservationByUser(ReservationRequestPayload payload, User patient) {
         Reservation reservation = new Reservation();
@@ -65,6 +67,8 @@ public class ReservationService {
                 .stream().filter(res -> res.getId().equals(reservationId) && res.getLaboratory().equals(laboratory))
                 .findFirst().orElseThrow();
         reservation.setTestResult(testRecord);
+        publisher.publishTestResultUploadedEvent(reservationId);
         return reservationRepository.save(reservation);
     }
+
 }

@@ -1,6 +1,7 @@
 package com.example.springbootauthdemo.lab;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,7 @@ public class LabAuth implements Authentication {
     @Column(name = "lab_auth_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
 
     private boolean isAuthenticated;
 
@@ -59,16 +61,19 @@ public class LabAuth implements Authentication {
     }
 
     @Override
+    @JsonIgnore
     public Object getDetails() {
         return null;
     }
 
     @Override
+    @JsonIgnore
     public Object getPrincipal() {
         return this.authLab;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAuthenticated() {
         return isAuthenticated;
     }
