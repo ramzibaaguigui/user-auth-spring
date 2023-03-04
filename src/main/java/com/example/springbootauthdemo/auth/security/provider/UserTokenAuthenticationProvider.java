@@ -1,4 +1,4 @@
-package com.example.springbootauthdemo.auth.security;
+package com.example.springbootauthdemo.auth.security.provider;
 
 import com.example.springbootauthdemo.auth.entity.UserAuth;
 import com.example.springbootauthdemo.auth.repository.UserAuthRepository;
@@ -11,14 +11,14 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TokenAuthenticationProvider implements AuthenticationProvider {
+public class UserTokenAuthenticationProvider implements AuthenticationProvider {
 
     private final UserAuthPool userAuthPool;
     private final UserAuthRepository userAuthRepository;
 
     @Autowired
-    public TokenAuthenticationProvider(UserAuthPool userAuthPool,
-                                       UserAuthRepository userAuthRepository) {
+    public UserTokenAuthenticationProvider(UserAuthPool userAuthPool,
+                                           UserAuthRepository userAuthRepository) {
         this.userAuthPool = userAuthPool;
         this.userAuthRepository = userAuthRepository;
     }

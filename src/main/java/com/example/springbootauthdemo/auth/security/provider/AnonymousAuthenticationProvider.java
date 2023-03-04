@@ -1,4 +1,4 @@
-package com.example.springbootauthdemo.auth.security;
+package com.example.springbootauthdemo.auth.security.provider;
 
 import com.example.springbootauthdemo.auth.security.auth.AnonymousAuthentication;
 import org.springframework.security.authentication.AuthenticationProvider;

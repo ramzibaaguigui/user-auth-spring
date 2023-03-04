@@ -1,6 +1,8 @@
-package com.example.springbootauthdemo.auth.security;
+package com.example.springbootauthdemo.auth.security.config;
 
 import com.example.springbootauthdemo.auth.filter.UserAuthFilter;
+import com.example.springbootauthdemo.auth.security.provider.AnonymousAuthenticationProvider;
+import com.example.springbootauthdemo.auth.security.provider.UserTokenAuthenticationProvider;
 import com.example.springbootauthdemo.auth.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +21,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private TokenAuthenticationProvider tokenAuthenticationProvider;
+    private UserTokenAuthenticationProvider userTokenAuthenticationProvider;
     private AnonymousAuthenticationProvider anonymousAuthenticationProvider;
     private TimeUtils time;
     @Bean
@@ -29,8 +31,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     @Autowired
-    public void setTokenAuthenticationProvider(TokenAuthenticationProvider tokenAuthenticationProvider) {
-        this.tokenAuthenticationProvider = tokenAuthenticationProvider;
+    public void setTokenAuthenticationProvider(UserTokenAuthenticationProvider userTokenAuthenticationProvider) {
+        this.userTokenAuthenticationProvider = userTokenAuthenticationProvider;
     }
 
     @Autowired
@@ -46,7 +48,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(new UserAuthFilter(authenticationManager(), time), BasicAuthenticationFilter.class);
-        http.authorizeRequests().antMatchers("/forAll", "/auth", "/register")
+        http.authorizeRequests().antMatchers("/forAll", "/patient/auth", "/patient/register",
+                        "/lab/auth")
                 .permitAll().and()
                 .authorizeRequests().anyRequest().hasRole("USER")
                 .and().cors().and().csrf().disable();
@@ -59,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(tokenAuthenticationProvider);
+        auth.authenticationProvider(userTokenAuthenticationProvider);
         auth.authenticationProvider(anonymousAuthenticationProvider);
     }
 

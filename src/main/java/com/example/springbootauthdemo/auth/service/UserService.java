@@ -8,7 +8,6 @@ import com.example.springbootauthdemo.auth.repository.UserRepository;
 import com.example.springbootauthdemo.auth.utils.AuthTokenGenerator;
 import com.example.springbootauthdemo.auth.utils.Constants;
 import com.example.springbootauthdemo.auth.utils.TimeUtils;
-import com.example.springbootauthdemo.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

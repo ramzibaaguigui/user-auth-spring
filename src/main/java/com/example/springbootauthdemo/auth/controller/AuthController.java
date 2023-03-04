@@ -35,7 +35,7 @@ public class AuthController {
         this.userAuthPool = userAuthPool;
     }
 
-    @PostMapping("/register")
+    @PostMapping("patient/register")
     public ResponseEntity<?> register(@RequestBody User createUserPayload) {
         try {
             User user = userService.registerUser(createUserPayload);
@@ -45,7 +45,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/auth")
+    @PostMapping("patient/auth")
     public ResponseEntity<?> authenticate(@RequestBody LoginRequestPayload loginRequestPayload) {
         try {
             return ResponseEntity.ok(userService.authenticateUser(loginRequestPayload));
@@ -54,7 +54,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/logouta")
+    @PostMapping("/signout")
     public ResponseEntity<?> logout(HttpServletRequest httpServletRequest) {
         String authToken = httpServletRequest.getHeader(AuthHeaders.HEADER_AUTHENTICATION);
         System.out.println("=======================handling the response=========================");

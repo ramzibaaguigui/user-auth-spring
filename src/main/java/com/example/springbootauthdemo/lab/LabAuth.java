@@ -1,4 +1,4 @@
-package com.example.springbootauthdemo.auth.entity;
+package com.example.springbootauthdemo.lab;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -20,59 +20,57 @@ import java.util.Date;
 @Setter
 
 @Entity
-@Table(name = "user_auths")
-public class UserAuth implements Authentication {
+@Table(name = "lab_auths")
+
+public class LabAuth implements Authentication {
+
+    @Id
+    @Column(name = "lab_auth_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private boolean isAuthenticated;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "auth_id")
-    private Long id;
-
-    @Column(name = "token")
-    private String token;
-
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @Column(name = "expires_at")
-    private Date expiresAt;
+    @JoinColumn(name = "id")
+    private Laboratory authLab;
 
     @Column(name = "issued_at")
     private Date issuedAt;
 
-    @Override
+    @Column(name = "expires_at")
+    private Date expiresAt;
+
+    @Column(name = "token")
+    private String token;
+
+
     @JsonIgnore
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new ArrayList<>() {{
-            add(new SimpleGrantedAuthority("ROLE_USER"));
+            add(new SimpleGrantedAuthority("ROLE_LAB"));
         }};
     }
 
     @Override
-    @JsonIgnore
     public Object getCredentials() {
         return this.token;
     }
 
     @Override
-    @JsonIgnore
     public Object getDetails() {
         return null;
     }
 
     @Override
-    @JsonIgnore
     public Object getPrincipal() {
-        return this.user;
+        return this.authLab;
     }
 
     @Override
-    @JsonIgnore
     public boolean isAuthenticated() {
-        return this.isAuthenticated;
+        return isAuthenticated;
     }
 
     @Override
@@ -84,5 +82,4 @@ public class UserAuth implements Authentication {
     public String getName() {
         return this.token;
     }
-
 }
