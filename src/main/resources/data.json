@@ -1,0 +1,136 @@
+[
+  {
+    "test_name": "Complete blood count (CBC)",
+    "subtests": [
+      {
+        "name": "Red blood cell count (RBC)"
+      },
+      {
+        "name": "Hemoglobin (Hb)"
+      },
+      {
+        "name": "Hematocrit (Hct)"
+      },
+      {
+        "name": "Mean corpuscular volume (MCV)"
+      },
+      {
+        "name": "Mean corpuscular hemoglobin (MCH)"
+      },
+      {
+        "name": "Mean corpuscular hemoglobin concentration (MCHC)"
+      },
+      {
+        "name": "Red cell distribution width (RDW)"
+      },
+      {
+        "name": "White blood cell count (WBC)"
+      },
+      {
+        "name": "Differential white blood cell count (Neutrophils, Lymphocytes, Monocytes, Eosinophils, Basophils)"
+      },
+      {
+        "name": "Platelet count"
+      }
+    ]
+  },
+  {
+    "test_name": "Blood glucose test",
+    "subtests": [
+      {
+        "name": "Fasting blood glucose (FBG)"
+      },
+      {
+        "name": "Random blood glucose"
+      },
+      {
+        "name": "Hemoglobin A1c (HbA1c)"
+      }
+    ]
+  },
+  {
+    "test_name": "Lipid panel",
+    "subtests": [
+      {
+        "name": "Total cholesterol"
+      },
+      {
+        "name": "Low-density lipoprotein (LDL) cholesterol"
+      },
+      {
+        "name": "High-density lipoprotein (HDL) cholesterol"
+      },
+      {
+        "name": "Triglycerides"
+      }
+    ]
+  },
+  {
+    "test_name": "Liver function tests",
+    "subtests": [
+      {
+        "name": "Alanine aminotransferase (ALT)"
+      },
+      {
+        "name": "Aspartate aminotransferase (AST)"
+      },
+      {
+        "name": "Alkaline phosphatase (ALP)"
+      },
+      {
+        "name": "Total bilirubin"
+      },
+      {
+        "name": "Albumin"
+      }
+    ]
+  },
+  {
+    "test_name": "Kidney function tests",
+    "subtests": [
+      {
+        "name": "Blood urea nitrogen (BUN)"
+      },
+      {
+        "name": "Creatinine"
+      },
+      {
+        "name": "Estimated glomerular filtration rate (eGFR)"
+      }
+    ]
+  },
+  {
+    "test_name": "Thyroid function tests",
+    "subtests": [
+      {
+        "name": "Thyroid-stimulating hormone (TSH)"
+      },
+      {
+        "name": "Free thyroxine (FT4)"
+      },
+      {
+        "name": "Total or free triiodothyronine (T3)"
+      }
+    ]
+  },
+  {
+    "test_name": "Blood clotting tests",
+    "subtests": [
+      {
+        "name": "Prothrombin time (PT)"
+      },
+      {
+        "name": "International normalized ratio (INR)"
+      },
+      {
+        "name": "Activated partial thromboplastin time (aPTT)"
+      },
+      {
+        "name": "Fibrinogen"
+      },
+      {
+        "name": "D-dimer"
+      }
+    ]
+  }
+]

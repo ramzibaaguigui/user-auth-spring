@@ -62,7 +62,7 @@ public class TestResultInterpretationService {
     }
 
 
-    private InterpretationServerResponse getInterpretationFromServerResponse(String requestContent) throws URISyntaxException {
+    public InterpretationServerResponse getInterpretationFromServerResponse(String requestContent) throws URISyntaxException {
 
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();

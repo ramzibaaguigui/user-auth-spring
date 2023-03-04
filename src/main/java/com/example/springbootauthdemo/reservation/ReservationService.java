@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class ReservationService {
 
@@ -81,4 +84,17 @@ public class ReservationService {
         return reservationRepository.save(reservation);
     }
 
+    public List<Reservation> getAllReservationsDetailsForLab(Laboratory laboratory) {
+        return reservationRepository.findAll()
+                .stream().filter(
+                        reservation -> reservation.getLaboratory().equals(laboratory)
+                ).collect(Collectors.toList());
+    }
+
+    public List<Reservation> getAllReservationsDetailsForPatient(User patient) {
+        return reservationRepository.findAll()
+                .stream().filter(
+                        reservation -> reservation.getPatient().equals(patient)
+                ).collect(Collectors.toList());
+    }
 }

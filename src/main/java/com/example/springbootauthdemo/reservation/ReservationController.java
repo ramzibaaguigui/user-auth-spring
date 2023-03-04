@@ -61,6 +61,18 @@ public class ReservationController {
         }
     }
 
+    @GetMapping("/reservation/all/details/bypatient")
+    public ResponseEntity<?> getAllReservationsDetailsForPatient(Authentication authentication) {
+        try {
+            if (authentication.getPrincipal() instanceof User patient) {
+                return ResponseEntity.ok(reservationService.getAllReservationsDetailsForPatient(patient));
+            }
+            return ResponseEntity.badRequest().build();
+        } catch (Exception exception) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @GetMapping("/reservation/{reservation_id}/details/bylab")
     public ResponseEntity<?> getReservationDetailsForLab(Authentication authentication,
                                                          @PathVariable("reservation_id") Long reservationId) {
@@ -74,6 +86,20 @@ public class ReservationController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/reservation/all/details/bylab")
+    public ResponseEntity<?> getAllReservationDetailsForLab(Authentication authentication) {
+        try {
+            if (authentication.getPrincipal() instanceof Laboratory laboratory) {
+                return ResponseEntity.ok(reservationService.getAllReservationsDetailsForLab(laboratory));
+            }
+            return ResponseEntity.badRequest().build();
+        } catch (Exception e) {
+
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
     @PostMapping("/reservation/{reservation_id}/approve")
     public ResponseEntity<?> approveReservationByLab(Authentication authentication,
@@ -101,7 +127,7 @@ public class ReservationController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/reservation/{reservation_id}/postresult")
     public ResponseEntity<?> uploadTestResult(Authentication authentication,
                                            @PathVariable("reservation_id") Long reservationId,
                                               @RequestBody @NonNull TestRecord testRecord
