@@ -24,8 +24,11 @@ public class TestResultInterpretation {
     private Long id;
 
 
-    @Column(name = "content")
-    private String content;
+    @Column(name = "technical_content")
+    private String technicalContent;
+
+    @Column(name = "non_technical_content")
+    private String nonTechnicalContent;
 
     @JsonIgnore
     @OneToOne(mappedBy = "interpretation")

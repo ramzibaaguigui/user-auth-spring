@@ -1,13 +1,22 @@
 package com.example.springbootauthdemo.reservation;
 
+import ch.qos.logback.classic.pattern.MessageConverter;
 import lombok.SneakyThrows;
+import nonapi.io.github.classgraph.json.JSONDeserializer;
+import nonapi.io.github.classgraph.json.JSONSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import springfox.documentation.spring.web.json.Json;
 
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
+
 
 @Service
 public class TestResultInterpretationService {
@@ -17,7 +26,7 @@ public class TestResultInterpretationService {
      */
     // to get from abdelkhalek
     // todo: continue with the ai server connectoin
-    private static final String INTERPRETATION_SERVER_URL = "";
+    private static final String INTERPRETATION_SERVER_URL = "http://127.0.0.1:8000/api/interpret/";
 
     private final TestResultInterpretationRepository interpretationRepository;
     private final TestRecordRepository testRecordRepository;
@@ -39,23 +48,41 @@ public class TestResultInterpretationService {
         TestRecord testRecord = reservation.getTestResult();
         if (testRecord == null) throw new Exception("the test record should never be null");
 
-        // the test result is not null;
+        // getting the response from the databse
+        InterpretationServerResponse response = getInterpretationFromServerResponse(
+                testRecordToString(testRecord)
+        );
 
-        // testRecord.setInterpretation();
-        return null;
+        TestResultInterpretation interpretation = new TestResultInterpretation();
+        interpretation.setTestRecord(testRecord);
+        interpretation.setTechnicalContent(response.getTechnical());
+        interpretation.setNonTechnicalContent(response.getNonTechnical());
+        testRecordRepository.save(testRecord);
+        return interpretationRepository.save(interpretation);
     }
 
-    private String getInterpretationServerResponse(String requestContent) throws URISyntaxException {
-        HttpClient client = HttpClient.newHttpClient();
-        byte[] sampleData = "Sample request body".getBytes();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI(INTERPRETATION_SERVER_URL))
-                .headers("Content-Type", "text/plain;charset=UTF-8")
-                .GET()
-                .build();
-        return null;
-        // todo: some work to be done here
+
+    private InterpretationServerResponse getInterpretationFromServerResponse(String requestContent) throws URISyntaxException {
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Cache-Control", "no-cache");
+        headers.set("Content-Type", "application/json");
+        headers.set("Accept", "application/json");
+        HttpEntity<String> request = new HttpEntity<>(
+                JSONSerializer.serializeObject(InterpretationServerRequestBody.create(requestContent)),
+                headers
+        );
+
+        InterpretationServerResponse response = restTemplate.postForObject(
+                INTERPRETATION_SERVER_URL,
+                request,
+                InterpretationServerResponse.class);
+        return response;
+
     }
+
+
 
 
 
