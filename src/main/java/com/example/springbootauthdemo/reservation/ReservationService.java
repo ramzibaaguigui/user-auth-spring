@@ -2,6 +2,7 @@ package com.example.springbootauthdemo.reservation;
 
 import com.example.springbootauthdemo.auth.entity.User;
 import com.example.springbootauthdemo.lab.Laboratory;
+import com.example.springbootauthdemo.medicaltest.MedicalTestFamilyRepository;
 import com.example.springbootauthdemo.reservation.event.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,14 +13,23 @@ public class ReservationService {
 
     private final ReservationRepository reservationRepository;
     private final Publisher publisher;
+    private final MedicalTestFamilyRepository medicalTestFamilyRepository;
+
     @Autowired
-    public ReservationService(ReservationRepository reservationRepository, Publisher publisher) {
+    public ReservationService(ReservationRepository reservationRepository, Publisher publisher,
+                              MedicalTestFamilyRepository medicalTestFamilyRepository) {
         this.reservationRepository = reservationRepository;
         this.publisher = publisher;
+        this.medicalTestFamilyRepository = medicalTestFamilyRepository;
     }
     public Reservation makeReservationByUser(ReservationRequestPayload payload, User patient) {
         Reservation reservation = new Reservation();
         reservation.setReservationDate(payload.getDate());
+        reservation.setTargetFamilies(
+                payload.getTestIds().stream().map(medicalTestFamilyRepository::getById)
+                        .toList()
+        );
+
         reservation.setPatient(patient);
         reservation.setStatus(Reservation.ReservationStatus.RESERVED);
         return this.reservationRepository.save(reservation);

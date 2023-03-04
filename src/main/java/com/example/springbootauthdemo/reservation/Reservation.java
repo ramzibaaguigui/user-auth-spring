@@ -2,6 +2,7 @@ package com.example.springbootauthdemo.reservation;
 
 import com.example.springbootauthdemo.auth.entity.User;
 import com.example.springbootauthdemo.lab.Laboratory;
+import com.example.springbootauthdemo.medicaltest.MedicalTestFamily;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +11,9 @@ import lombok.Setter;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -48,6 +51,10 @@ public class Reservation {
     @JoinColumn(name = "test_record_id")
     @Nullable
     private TestRecord testResult = null;
+
+    @ManyToMany
+    @JoinColumn(name = "family_id")
+    private List<MedicalTestFamily> targetFamilies = new ArrayList<>();
 
     enum ReservationStatus {
         RESERVED, PROGRESS, REFUSED, FINISHED

@@ -57,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(new UserAuthFilter(authenticationManager(), time), BasicAuthenticationFilter.class);
         // http.addFilterBefore(new LabAuthFilter(authenticationManager(), time), BasicAuthenticationFilter.class);
-
+        http.authorizeRequests().antMatchers("/swagger-ui").permitAll();
         http.authorizeRequests().antMatchers("/forAll", "/patient/auth", "/patient/register",
                         "/lab/auth", "/lab/register")
                 .permitAll().and()
